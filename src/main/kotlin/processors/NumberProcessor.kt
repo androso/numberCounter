@@ -9,7 +9,7 @@ data class NumberProcessorResult(
     val evensList: MutableList<Int>
 )
 
-class NumberProcessor()  {
+class NumberProcessor() {
     fun processNumbers(limit: Int): NumberProcessorResult {
         val primeNumbers = mutableListOf<Int>()
         val oddNumbers = mutableListOf<Int>()
@@ -17,20 +17,22 @@ class NumberProcessor()  {
 
         for (i in 1..limit) {
             val result = evaluateNumber(i)
-            if (result.numType == NumType.EVEN) {
-                evenNumbers.add(i)
-            } else if (result.numType == NumType.ODD) {
-                oddNumbers.add(i)
-            } else {
-                primeNumbers.add(i)
+            for (type in result.numTypes) {
+                if (type === NumType.EVEN) {
+                    evenNumbers.add(i)
+                } else if (type === NumType.ODD) {
+                    oddNumbers.add(i)
+                } else if (type === NumType.PRIME) {
+                    primeNumbers.add(i)
+                }
             }
         }
         return NumberProcessorResult(primeNumbers, oddNumbers, evenNumbers)
     }
 
     private fun evaluateNumber(num: Int): NumberEvaluationResult {
-        val numType: NumType
-        var divisors = arrayOf(1, num)
+        val numTypes = mutableListOf<NumType>()
+        var divisors = arrayOf(1)
         for (divider in 2..num) {
             if (num % divider == 0) {
                 divisors += divider
@@ -38,13 +40,15 @@ class NumberProcessor()  {
         }
 
         if (divisors.size == 2) {
-            numType = NumType.PRIME
-        } else if (num % 2 == 0) {
-            numType = NumType.EVEN
-        } else {
-            numType = NumType.ODD
+            numTypes.add(NumType.PRIME)
+        }
+        if (num % 2 == 0) {
+            numTypes.add(NumType.EVEN)
+        }
+        if (num % 2 == 1) {
+            numTypes.add(NumType.ODD)
         }
 
-        return NumberEvaluationResult(num, numType, divisors)
+        return NumberEvaluationResult(num, numTypes, divisors)
     }
 }
