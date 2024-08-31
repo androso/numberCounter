@@ -9,13 +9,13 @@ data class NumberProcessorResult(
     val evensList: MutableList<Int>
 )
 
-class NumberProcessor(private val limit: Int)  {
-    fun processNumbers(): NumberProcessorResult {
+class NumberProcessor()  {
+    fun processNumbers(limit: Int): NumberProcessorResult {
         val primeNumbers = mutableListOf<Int>()
         val oddNumbers = mutableListOf<Int>()
         val evenNumbers = mutableListOf<Int>()
 
-        for (i in 0..limit) {
+        for (i in 1..limit) {
             val result = evaluateNumber(i)
             if (result.numType == NumType.EVEN) {
                 evenNumbers.add(i)
