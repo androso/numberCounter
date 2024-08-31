@@ -1,5 +1,9 @@
 package org.homework.common
-
+enum class NumType {
+    EVEN,
+    PRIME,
+    ODD
+}
 interface BaseNumber {
     val value: Int
     fun printValue() {
@@ -34,3 +38,5 @@ data class EvenNumber(override val value: Int, val dividers: Array<Int>) : BaseN
         println("The dividers of $value are: ${dividers.joinToString(", ")}")
     }
 }
+
+data class NumberEvaluationResult(val number: Int, val numType: NumType, val dividers: Array<Int>)
